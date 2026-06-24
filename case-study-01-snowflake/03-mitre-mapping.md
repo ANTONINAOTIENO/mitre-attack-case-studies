@@ -36,7 +36,7 @@ After gaining access, the attackers needed to understand the environment and ide
 
 ### ATT&CK Tactic
 Collection
-...
+
 
 ### Justification
 After identifying valuable datasets, the attackers gathered and prepared the information they intended to steal. This activity aligns with Collection because the attackers were actively obtaining the target data before transferring it outside the environment.
@@ -47,8 +47,7 @@ After identifying valuable datasets, the attackers gathered and prepared the inf
 
 ### ATT&CK Tactic
 Exfiltration
-...
 
 ### Justification
-The attacker has collected the valuable data and has staged it for exfiltratio/exportation. At this poing there may be large downloads of the valuable data identified from the accounts into their server. This activity aligns with Exfiltration because the data is exiting the account premises.
+The attacker has collected the valuable data and has staged it for exfiltration/exportation. At this poing there may be large downloads of the valuable data identified from the accounts into their server. This activity aligns with Exfiltration because the data is exiting the account premises.
 ...
