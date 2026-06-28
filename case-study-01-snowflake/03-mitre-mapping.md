@@ -1,53 +1,24 @@
 # MITRE ATT&CK Mapping
 
-## Step 1: Access Using Legitimate Credentials
+## Precondition
 
-### ATT&CK Tactic
+## MITRE Mapping: None
 
-Initial Access
+### Reason: Outside the scope of this incident analysis.
 
-### ATT&CK Technique
+*Note that the credential compromise that enabled this campaign is acknowledged as a precondition but is not mapped in this report because it occurred prior to the documented intrusion into Snowflake customer environments.
 
-Valid Accounts
-
-### Justification
-
-The attackers successfully authenticated using legitimate credentials associated with Snowflake customer accounts. Because the attackers used real accounts rather than exploiting a software vulnerability, the activity aligns with the ATT&CK technique "Valid Accounts."
+*Analyst Note: ATT&CK mappings are based on publicly documented attacker behavior from incident reporting by Mandiant and other public sources. Where public evidence does not support mapping to a specific sub-technique, the mapping is intentionally limited to the technique level.
 
 
-
-## Step 2: Identifying Valuable Data
-
-### ATT&CK Tactic
-
-Discovery
-
-### ATT&CK Technique
-
-Cloud Service Discovery
-
-### Justification
-
-After gaining access, the attackers needed to understand the environment and identify valuable datasets. This activity aligns with Discovery because the attackers were gathering information about available resources before selecting data for theft.
+| Timeline Step          | ATT&CK Tactic  | Technique                      | Technique ID | Sub-technique              | Justification                                                                                                                                                                                                                                                                                            |
+| ---------------------- | -------------- | ------------------------------ | ------------ | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Initial Authentication | Initial Access | Valid Accounts                 | T1078        | T1078.004 – Cloud Accounts | The attackers successfully authenticated to targeted Snowflake customer environments using compromised legitimate cloud account credentials, establishing an initial foothold without exploiting a software vulnerability.                                                                               |
+| Environment Discovery  | Discovery      | Cloud Storage Object Discovery | T1619        | N/A                        | After gaining access, the attackers enumerated accessible cloud-hosted datasets and storage objects to identify valuable information for theft. Public reporting showed the use of reconnaissance commands such as `SHOW TABLES` to discover available databases and tables before collecting data.      |
+| Data Collection        | Collection     | Data from Cloud Storage        | T1530        | N/A                        | Once valuable datasets had been identified, the attackers retrieved the targeted information from the compromised Snowflake environment using SQL queries such as `SELECT * FROM`. They then staged the data using temporary Snowflake stages (`CREATE TEMP STAGE`) and `COPY INTO` before exfiltration. |
+| Data Exfiltration      | Exfiltration   | Exfiltration Over Web Service  | T1567        | N/A                        | After staging the collected data, the attackers transferred it outside the victim environment. Public reporting showed the use of the `GET` command to retrieve staged data from Snowflake, completing the exfiltration phase of the attack.    
 
 
-
-## Step 3: Collecting data
-
-### ATT&CK Tactic
-Collection
+Although the attackers used Snowflake stages during the operation, public reporting specifically documented the use of the GET command to retrieve data to attacker-controlled local systems. Therefore, the exfiltration is mapped to T1567 rather than the more specific T1567.002 (Exfiltration to Cloud Storage).
 
 
-### Justification
-After identifying valuable datasets, the attackers gathered and prepared the information they intended to steal. This activity aligns with Collection because the attackers were actively obtaining the target data before transferring it outside the environment.
-
-
-
-## Step 4: Exporting Data
-
-### ATT&CK Tactic
-Exfiltration
-
-### Justification
-The attacker has collected the valuable data and has staged it for exfiltration/exportation. At this poing there may be large downloads of the valuable data identified from the accounts into their server. This activity aligns with Exfiltration because the data is exiting the account premises.
-...
